@@ -15,6 +15,8 @@ from freegames import vector
 
 bird = vector(0, 0)
 balls = []
+sizes = []
+speeds = []
 
 def tap(x, y):
     "Move bird up in response to screen tap."
@@ -35,10 +37,12 @@ def draw(alive):
         dot(10, 'green')
     else:
         dot(10, 'red')
-
+        
+    index = 0
     for ball in balls:
         goto(ball.x, ball.y)
-        dot(20, 'black')
+        dot(sizes[index], 'black')
+        index +=1
 
     update()
 
@@ -46,16 +50,24 @@ def move():
     "Update object positions."
     bird.y -= 5
 
+    index=0
     for ball in balls:
-        ball.x -= 3
+        ball.x -= speeds[index]
+        index  += 1
 
     if randrange(10) == 0:
         y = randrange(-199, 199)
         ball = vector(199, y)
+        size = randrange(10,40)
+        speed = randrange(1,10)
         balls.append(ball)
+        sizes.append(size)
+        speeds.append(speed)
 
     while len(balls) > 0 and not inside(balls[0]):
         balls.pop(0)
+        sizes.pop(0)
+        speeds.pop(0)
 
     if not inside(bird):
         draw(False)
