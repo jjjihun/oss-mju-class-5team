@@ -12,7 +12,8 @@ Exercises
 from random import *
 from turtle import *
 from freegames import vector
-
+writer = Turtle(visible=False)
+state={'score':0}
 bird = vector(0, 0)
 balls = []
 sizes = []
@@ -37,6 +38,7 @@ def draw(alive):
         dot(10, 'green')
     else:
         dot(10, 'red')
+        writer.write(state['score'])
         
     index = 0
     for ball in balls:
@@ -63,6 +65,7 @@ def move():
         balls.append(ball)
         sizes.append(size)
         speeds.append(speed)
+        state['score'] += 1
 
     while len(balls) > 0 and not inside(balls[0]):
         balls.pop(0)
@@ -76,6 +79,7 @@ def move():
     for ball in balls:
         if abs(ball - bird) < 15:
             draw(False)
+            writer.write(state['score'])
             return
 
     draw(True)
@@ -83,8 +87,14 @@ def move():
 
 setup(420, 420, 370, 0)
 hideturtle()
-up()
 tracer(False)
+writer.hideturtle()
+writer.penup()
+writer.goto(190,190)
+writer.color('black')
+up()
+
+
 onscreenclick(tap)
 move()
 done()
