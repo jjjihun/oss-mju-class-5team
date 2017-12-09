@@ -23,6 +23,7 @@ def value():
 ball = vector(0, 0)
 aim = vector(value(), value())
 state = {1: 0, 2: 0}
+rectState ={1:50,2:50}
 
 def move(player, change):
     "Move player position by change."
@@ -44,8 +45,8 @@ def rectangle(x, y, width, height):
 def draw():
     "Draw game and move pong ball."
     clear()
-    rectangle(-200, state[1], 10, 50)
-    rectangle(190, state[2], 10, 50)
+    rectangle(-205, state[1], 10, rectState[1])
+    rectangle(190 ,state[2], 10, rectState[2])
 
     ball.move(aim)
     x = ball.x
@@ -59,21 +60,23 @@ def draw():
     if y < -200 or y > 200:
         aim.y = -aim.y
 
-    if x < -185:
+    if x < -195:
         low = state[1]
         high = state[1] + 50
 
         if low <= y <= high:
-            aim.x = -aim.x
+            aim.x = -aim.x+1
+            rectState[1] += 5
         else:
             return
 
-    if x > 185:
+    if x > 195:
         low = state[2]
         high = state[2] + 50
 
         if low <= y <= high:
-            aim.x = -aim.x
+            aim.x = -aim.x-1
+            rectState[2] += 5
         else:
             return
 
